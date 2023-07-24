@@ -41,8 +41,3 @@ function genererWorks(works) {
 }
 
 fetchWorks();
-
-// function init() {
-//   genererWorks(works);
-// }
-// premier affichage de la page
