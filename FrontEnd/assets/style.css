@@ -125,6 +125,39 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* ajout de la barre de filtres et des boutons "filtres" */
+.filterBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 70%;
+	height: 37px;
+	margin: auto;
+	padding-bottom: 40px;
+	gap: 10px;
+}
+
+.filterButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	font-family: "syne";
+	font-size: 1em;
+	font-weight: 700;
+	color: #1D6154;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	padding: 0px 10px 0px 10px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.filterButton:active {
+	color: #fffef8;
+	background: #1D6154;
+}
 .gallery {
 	width: 100%;
 	display: grid;
