@@ -48,18 +48,35 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 1440px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+main {
+	width: 85%;
+	display: flex;
+	flex-direction: column;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
+	width: 85%;
 	margin: 50px 0
 }
 section {
 	margin: 50px 0
+}
+
+#navBar {
+	display: flex;
+	justify-content: space-between;
+	margin: 38px 0 92px 0;
 }
 
 h1{
@@ -95,24 +112,40 @@ nav li {
 	font-size: 1.2em;
 }
 
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+.current-page {
+	font-weight: 700;
+}
+
 li:hover {
 	color: #B1663C;
 }
 #introduction {
 	display: flex;
+	width: 100%;
+	justify-content: space-between;
 	align-items: center;
+	position: relative;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
+	max-width: 434px;
 }
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 80%;
+	height: 355px;
+	aspect-ratio: 1;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	margin-left: 72px;
+	max-width: 404px;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -120,6 +153,13 @@ li:hover {
 
 #introduction p {
 	margin-bottom: 0.5em;
+}
+
+#portfolio {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
 }
 #portfolio h2 {
 	text-align: center;
@@ -131,7 +171,7 @@ li:hover {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	width: 70%;
+	width: 80%;
 	height: 37px;
 	margin: auto;
 	padding-bottom: 40px;
@@ -213,9 +253,65 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+/*page de login  */
+
+#login {
+	width: 33%;
+	margin: 112px auto 372px auto;
+}
+
+#login > * {
+	text-align: center;
+}
+
+#login form {
+	display: flex;
+	text-align: left;
+	margin-top: 30px;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#login label {
+	margin: 2em 0 1em 0;
+}
+
+#login a {
+	color: #3D3D3D;
+	text-align: center;
+	text-decoration: underline;
+}
+
+#login_form #login_button {
+	width: 179px;
+	height: 36px;
+	font-family: 'Syne';
+	font-size: 1em;
+	height: 36px;
+	border-radius: 120px;
+	background-color: #1D6154;
+	color: #fff;
+	font-weight: 700;
+	margin: auto;
+	margin-top: 35px;
+	margin-bottom: 28px;
+}
+
+footer{
+	width: 1140px;
+	padding-right: 90px;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
