@@ -102,3 +102,9 @@ function genererCategories(category) {
     });
   }
 }
+
+// Remplacement du lien "login" par "logout"
+const logout = document.getElementsById(logout);
+if (token) {
+  displayLogout.textContent = "Logout";
+}

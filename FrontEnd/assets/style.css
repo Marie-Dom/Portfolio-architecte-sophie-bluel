@@ -271,6 +271,16 @@ input[type="submit"]:hover{
 	text-align: center;
 }
 
+.header-logout a:hover{
+	font-weight: 600;
+	color: black;	
+}
+
+#logout:hover {
+	cursor:pointer;
+	color: #B1663C;
+}
+
 #login_form {
 	display: flex;
 	margin-top: 30px;
