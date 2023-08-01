@@ -30,7 +30,7 @@
     <main>
       <section id="login">
         <h2>Log In</h2>
-        <form action="./index.html" method="post" id="login_form">
+        <form id="login_form">
           <label for="email" id="emailLabel">E-mail</label>
           <input
             type="email"
@@ -51,7 +51,12 @@
           />
           <span id="error"></span>
           <div id="login_button">
-            <input id="login_button" type="submit" value="Se connecter" />
+            <input
+              id="login_button"
+              type="submit"
+              value="Se connecter"
+              onclick="return addListenerSendForm()"
+            />
           </div>
           <a href="#">Mot de passe oublié</a>
         </form>

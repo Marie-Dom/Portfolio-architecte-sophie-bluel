@@ -103,8 +103,112 @@ function genererCategories(category) {
   }
 }
 
+// Fonction pour créer un element avec attributs et une classe css
+function createAndAppendElement(tagName, parent, className, attributes = {}) {
+  const element = document.createElement(tagName);
+  if (className) {
+    element.className = className;
+  }
+  for (const attribute in attributes) {
+    element.setAttribute(attribute, attributes[attribute]);
+  }
+  parent.appendChild(element);
+  return element;
+}
+
+// fonction pour modifier la valeur existante
+function setDisplayStyle(element, displayValue) {
+  element.style.display = displayValue;
+}
 // Remplacement du lien "login" par "logout"
-const logout = document.getElementsById(logout);
+const logout = document.getElementById("logout");
+console.log(logout);
+const token = window.localStorage.getItem("token");
 if (token) {
-  displayLogout.textContent = "Logout";
+  logout.textContent = "logout";
+  setDisplayStyle(filterBar, "none");
+
+  const editMod = document.getElementById("editMod");
+  editMod.appendChild(createEditElement());
+
+  displayHeadbandEditMod();
+}
+
+const displayLogout = document.getElementById("logout");
+
+// Quand l'utilisateur clique sur le bouton "logout", il se déconnecte
+displayLogout.addEventListener("click", () => {
+  window.localStorage.removeItem("token");
+  window.location.href = "./index.html";
+});
+
+// Si l'utilisateur ferme le navigateur ou la page, il se déconnecte
+window.addEventListener("unload", () => {
+  // window.localStorage.removeItem("token");
+});
+
+// Fonction pour créer un bouton, en lui appliquant une ou plusieurs classes, et en insérant un texte
+function createButtonElement(classNames = [], textContent = "") {
+  const button = document.createElement("div");
+  button.setAttribute("role", "button");
+
+  if (Array.isArray(classNames)) {
+    classNames.forEach((className) => {
+      button.classList.add(className);
+    });
+  } else {
+    button.classList.add(classNames);
+  }
+
+  if (textContent) {
+    button.textContent = textContent;
+  }
+
+  return button;
+}
+
+// Fonction pour créer une icone awesome
+function createIconElement(...classNames) {
+  const icon = document.createElement("i");
+  classNames.forEach((className) => {
+    icon.classList.add(className);
+  });
+  return icon;
+}
+
+// Fonction pour créer le bouton "modifier" et l'icone
+
+function createEditElement() {
+  const editMod = document.getElementById("editMod");
+  const iconEdit = createIconElement("fa-regular", "fa-pen-to-square");
+  const displayEdit = createButtonElement(["positionEdit"], "modifier");
+
+  displayEdit.insertBefore(iconEdit, displayEdit.firstChild);
+  return displayEdit;
+}
+
+// Fonction pour la mise en place du bandeau noir en mode édition
+function displayHeadbandEditMod() {
+  const header = document.querySelector("header");
+  header.style.marginTop = "100px";
+
+  const headerH1 = document.querySelector("header h1");
+  const divBlackHeadband = document.createElement("div");
+  divBlackHeadband.id = "blackHeadband";
+  header.insertBefore(divBlackHeadband, headerH1);
+
+  const divEditMod = createButtonElement(["positionEdit"], "Mode édition");
+  divEditMod.style.paddingTop = "0";
+  divEditMod.insertBefore(
+    createEditElement().firstChild,
+    divEditMod.firstChild
+  );
+
+  const publishChangesButton = createButtonElement(
+    ["publish-changes-button"],
+    "publier les changements"
+  );
+
+  divBlackHeadband.appendChild(divEditMod);
+  divBlackHeadband.appendChild(publishChangesButton);
 }

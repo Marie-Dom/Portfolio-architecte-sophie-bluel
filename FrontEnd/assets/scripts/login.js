@@ -1,13 +1,16 @@
 const header = document.querySelector("header");
 header.classList.add("header-logout");
 
-const form = document.getElementById("login_form");
-form.addEventListener("submit", async (event) => {
+async function addListenerSendForm() {
+  console.log("COUCOU");
+  const form = document.getElementById("login_form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+  });
   const dataLogin = {
     email: document.getElementById("email").value,
     password: document.getElementById("password").value,
   };
-  event.preventDefault();
   try {
     // Requête POST pour envoyer des données à l'API
     const url = "http://localhost:5678/api/users/login";
@@ -20,9 +23,13 @@ form.addEventListener("submit", async (event) => {
     });
 
     const responseData = await response.json();
+    const error = document.getElementById("error");
+    const message = document.createElement("p");
+    error.appendChild(message);
 
     // Vérification du code d'état de la réponse du serveur
     if (response.status === 200) {
+      error.innerHtml = "";
       const token = responseData.token;
       // Sauvegarde du token et redirection vers la page d'accueil
       window.localStorage.setItem("token", token);
@@ -30,19 +37,14 @@ form.addEventListener("submit", async (event) => {
 
       // Mise en place de messages d'erreur selon le code reçu
     } else if (response.status === 401) {
-      displayErrorMessage(
-        "L'email et/ou le mot de passe est erronné.",
-        "#error"
-      );
+      error.message.innerText = "Mot de passe incorrect.";
     } else if (response.status === 404) {
-      displayErrorMessage("Utilisateur inconnu.", "#error");
+      error.message.innerText = "Utilisateur inconnu.";
     }
 
     // Mise en place d'un message d'erreur s'il n'y a pas de connexion au serveur
   } catch (error) {
-    displayErrorMessage(
-      "Une erreur est survenue lors de la connexion.<br>Veuillez réessayer plus tard.",
-      "#error"
-    );
+    error.message.innerText =
+      "Une erreur est survenue lors de la connexion.<br>Veuillez réessayer plus tard.";
   }
-});
+}
