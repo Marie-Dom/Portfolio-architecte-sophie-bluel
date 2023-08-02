@@ -132,6 +132,9 @@ if (token) {
   editMod.appendChild(createEditElement());
 
   displayHeadbandEditMod();
+
+  const editModal = document.querySelector(".editModal");
+  createEditButton();
 }
 
 const displayLogout = document.getElementById("logout");
@@ -211,4 +214,16 @@ function displayHeadbandEditMod() {
 
   divBlackHeadband.appendChild(divEditMod);
   divBlackHeadband.appendChild(publishChangesButton);
+}
+
+// Fonction pour créer le bouton en mode edit sous l'image
+
+function createEditButton() {
+  const editModal = document.querySelector(".editModal");
+  const btnEdit = createButtonElement(["positionEdit"], "Modifier");
+  editModal.appendChild(btnEdit);
+  const btnIconEdit = createIconElement("fa-regular", "fa-pen-to-square");
+  editModal.appendChild(btnIconEdit);
+  btnEdit.insertBefore(btnIconEdit, btnEdit.firstChild);
+  return btnEdit;
 }

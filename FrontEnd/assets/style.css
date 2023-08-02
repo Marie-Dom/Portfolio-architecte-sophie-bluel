@@ -287,6 +287,11 @@ li:hover {
   gap: 30px;
 }
 
+.editModal {
+  display: flex;
+  gap: 30px;
+}
+
 /* ajout de la barre de filtres et des boutons "filtres" */
 .filterBar {
   display: flex;
@@ -437,6 +442,109 @@ input[type="submit"]:hover {
   color: red;
   font-size: 1em;
   font-weight: 700;
+}
+
+/* Pages des modals */
+
+.modal,
+.modal-move-button,
+.modal-delete-button {
+  display: flex;
+  justify-content: center;
+}
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+
+.modal.active {
+  display: block;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-wrapper {
+  position: relative;
+  top: 950px;
+  left: 50%;
+  justify-content: center;
+  width: 630px;
+  max-height: 730px;
+  padding: 60px 0px 48px 0px;
+  background: #ffffff;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.modal-wrapper h2 {
+  text-align: center;
+  font-family: Work Sans;
+  color: black;
+  font-size: 26px;
+  font-weight: 400;
+  padding-bottom: 46px;
+}
+
+#modal-page-one,
+#modal-page-two,
+.modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#modal-page-one {
+  position: relative;
+}
+
+.modal-move-button,
+.modal-delete-button {
+  height: 17px;
+  width: 17px;
+  border-radius: 2px;
+  background-color: black;
+  color: white;
+  position: absolute;
+  top: 6px;
+  align-items: center;
+}
+
+.modal-move-button {
+  font-size: 11.12px;
+  left: 35px;
+}
+
+.modal-delete-button {
+  font-size: 9px;
+  right: 6px;
+}
+
+.confirm-delete,
+.error-message {
+  font-weight: bold !important;
+  font-family: "Syne", sans-serif !important;
+}
+
+.confirm-delete {
+  position: absolute;
+  top: 30%;
+  border-radius: 10px;
+  background: black;
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 10px;
+  text-align: center;
 }
 
 footer {
