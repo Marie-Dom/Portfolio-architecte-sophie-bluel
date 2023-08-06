@@ -103,21 +103,21 @@ function genererCategories(category) {
   }
 }
 
-// Fonction pour créer un element avec attributs et une classe css
-function createAndAppendElement(tagName, parent, className, attributes = {}) {
-  const element = document.createElement(tagName);
-  if (className) {
-    element.className = className;
-  }
-  for (const attribute in attributes) {
-    element.setAttribute(attribute, attributes[attribute]);
-  }
-  parent.appendChild(element);
-  return element;
-}
+// Fonction pour créer un element avec attributs
+// function createAttributElt(tagName, parent, className, attributes = {}) {
+//   const element = document.createElement(tagName);
+//   if (className) {
+//     element.className = className;
+//   }
+//   for (const attribute in attributes) {
+//     element.setAttribute(attribute, attributes[attribute]);
+//   }
+//   parent.appendChild(element);
+//   return element;
+// }
 
 // fonction pour modifier la valeur existante
-function setDisplayStyle(element, displayValue) {
+export function setDisplayStyle(element, displayValue) {
   element.style.display = displayValue;
 }
 // Remplacement du lien "login" par "logout"
@@ -151,7 +151,7 @@ window.addEventListener("unload", () => {
 });
 
 // Fonction pour créer un bouton, en lui appliquant une ou plusieurs classes, et en insérant un texte
-function createButtonElement(classNames = [], textContent = "") {
+export function createButtonElement(classNames = [], textContent = "") {
   const button = document.createElement("div");
   button.setAttribute("role", "button");
 
@@ -171,7 +171,7 @@ function createButtonElement(classNames = [], textContent = "") {
 }
 
 // Fonction pour créer une icone awesome
-function createIconElement(...classNames) {
+export function createIconElement(...classNames) {
   const icon = document.createElement("i");
   classNames.forEach((className) => {
     icon.classList.add(className);

@@ -444,7 +444,7 @@ input[type="submit"]:hover {
   font-weight: 700;
 }
 
-/* Pages des modals */
+/* Pages des modales */
 
 .modal,
 .modal-move-button,
@@ -545,6 +545,144 @@ input[type="submit"]:hover {
   cursor: pointer;
   font-size: 10px;
   text-align: center;
+}
+
+#modal-page-two {
+  width: 77%;
+}
+
+.container-img {
+  height: 100%;
+  width: 129px;
+  position: absolute;
+  top: 0;
+}
+
+.container-img > * {
+  object-fit: cover;
+}
+
+#modal-page-one p {
+  font-family: "Syne";
+  color: #b1663c;
+  cursor: pointer;
+}
+
+#modal-form,
+.modal-form-field,
+.modal-add-photo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+}
+
+#modal-form {
+  align-items: center;
+}
+
+.modal-form-field {
+  border-bottom: 1px solid #b3b3b3;
+  padding-bottom: 46px;
+}
+
+.modal-form-field input,
+.modal-form-field select {
+  height: 50px;
+  font-size: 1.2em;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  border: none;
+}
+.modal-form-field select {
+  color: #6c6c6c;
+}
+.modal-form-field label {
+  margin: 2em 0 1em 0;
+}
+.modal-btn {
+  width: 180px;
+  font-weight: 700;
+  font-family: "Syne";
+  text-align: center;
+  margin: 2em auto;
+  border-radius: 60px;
+  background-color: #1d6154;
+  color: white;
+}
+.modal-add-photo {
+  background: #e8f1f6;
+  height: 169px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.modal-close,
+.modal-prev {
+  position: absolute;
+  cursor: pointer;
+}
+
+.modal-close {
+  top: 26px;
+  right: 30px;
+}
+
+.modal-prev {
+  top: 29px;
+  left: 30px;
+}
+
+#modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 6px;
+  grid-row-gap: 10px;
+  border-bottom: 1px solid #b3b3b3;
+  padding-bottom: 46px;
+}
+
+.modal-add-photo .modal-btn {
+  width: 173px !important ;
+  color: #306685;
+  background: #cbd6dc;
+  margin: 19px 0px 7px 0px !important;
+}
+
+.modal-add-photo p {
+  font-size: 10px;
+}
+
+.error-message {
+  color: darkred !important;
+
+  font-size: 16px !important;
+  text-decoration: none !important;
+}
+.modal-btn,
+#modal-btn-submit {
+  padding: 10px 0px !important;
+  width: 237px !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+.modal-btn {
+  margin: 38px 0px 23px 0px !important;
+}
+
+#modal-btn-submit {
+  background: #a7a7a7;
+  margin: 38px 0px 7px 0px !important;
+}
+
+#modal-gallery img {
+  height: 104px;
+  width: 78px;
+}
+
+#modal-gallery .work {
+  position: relative;
 }
 
 footer {
