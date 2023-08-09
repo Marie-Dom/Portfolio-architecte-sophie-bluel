@@ -1,16 +1,8 @@
 const header = document.querySelector("header");
 header.classList.add("header-logout");
-
-async function addListenerSendForm() {
-  console.log("COUCOU");
-  const form = document.getElementById("login_form");
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-  });
-  const dataLogin = {
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value,
-  };
+let loginForm = document.querySelector("form");
+loginForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
   try {
     // Requête POST pour envoyer des données à l'API
     const url = "http://localhost:5678/api/users/login";
@@ -19,32 +11,48 @@ async function addListenerSendForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataLogin),
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
     });
 
     const responseData = await response.json();
-    const error = document.getElementById("error");
-    const message = document.createElement("p");
-    error.appendChild(message);
 
     // Vérification du code d'état de la réponse du serveur
     if (response.status === 200) {
-      error.innerHtml = "";
       const token = responseData.token;
+
       // Sauvegarde du token et redirection vers la page d'accueil
       window.localStorage.setItem("token", token);
       window.location.href = "./index.html";
-
       // Mise en place de messages d'erreur selon le code reçu
     } else if (response.status === 401) {
-      error.message.innerText = "Mot de passe incorrect.";
+      displayErrorMessage("Mot de passe incorrect", "#error");
     } else if (response.status === 404) {
-      error.message.innerText = "Utilisateur inconnu.";
+      displayErrorMessage("Utilisateur inconnu.", "#error");
     }
 
-    // Mise en place d'un message d'erreur s'il n'y a pas de connexion au serveur
+    // Affichage d'un message d'erreur s'il n'y a pas de connexion au serveur
   } catch (error) {
-    error.message.innerText =
-      "Une erreur est survenue lors de la connexion.<br>Veuillez réessayer plus tard.";
+    displayErrorMessage(
+      "Une erreur est survenue lors de la connexion.<br>Veuillez réessayer plus tard.",
+      "#error"
+    );
   }
+});
+
+// Fonction pour afficher un message d'erreur
+function displayErrorMessage(message, selector) {
+  const errorContainer = document.querySelector(selector);
+  const errorMessageElement = errorContainer.querySelector(".error-message");
+  if (errorMessageElement) {
+    errorMessageElement.remove();
+  }
+  const errorMessage = document.createElement("p");
+
+  errorMessage.classList.add("error-message");
+  errorMessage.innerHTML = message;
+
+  errorContainer.appendChild(errorMessage);
 }

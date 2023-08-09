@@ -21,13 +21,13 @@ function secondPageModalDisplay(displayValue) {
 
 // Fonction pour afficher la 1ère page
 function modalePagefirst() {
-  FirstPageModalDisplay("flex");
+  firstPageModalDisplay("flex");
   secondPageModalDisplay("none");
 }
 
 // Fonction pour afficher la 2nd page
 function modalePageSecond() {
-  FirstPageModalDisplay("none");
+  firstPageModalDisplay("none");
   secondPageModalDisplay("flex");
 }
 
@@ -83,3 +83,67 @@ const modalTriggers = document.querySelectorAll(".modal-trigger");
 modalTriggers.forEach((trigger) =>
   trigger.addEventListener("click", toggleModal)
 );
+
+let worksModal;
+let worksReal;
+let idSet = 0;
+let categoriesInMemory;
+
+async function fetchCategories() {
+  await fetch("http://localhost:5678/api/categories")
+    .then(async (resp) => {
+      if (resp.status == 200) {
+        genererCategories(await resp.json());
+      } else {
+        console.log("Pas authorisé");
+      }
+    })
+    .catch((err) => {
+      if (!err.data?.message) {
+        console.log("Le site n'arrive pas à communiquer avec le serveur");
+      }
+    });
+}
+
+async function fetchWorksModal() {
+  await fetch("http://localhost:5678/api/works")
+    .then(async (resp) => {
+      if (resp.status == 200) {
+        worksReal = genererWorksModal(await resp.json());
+        worksModal = worksReal;
+        fetchCategories();
+      } else {
+        console.log("Pas authorisé");
+      }
+    })
+    .catch((err) => {
+      if (!err.data?.message) {
+        console.log("Le site n'arrive pas à communiquer avec le serveur");
+      }
+    });
+}
+
+function genererWorksModal(worksModal) {
+  for (let i = 0; i < worksModal.length; i++) {
+    // Récupération de l'élément du DOM qui accueillera les cartes
+    const divGallery = document.querySelector("#modal-gallery");
+
+    // Création d’une balise dédiée aux travaux (works)
+    const figure = document.createElement("figure");
+    figure.id = "figure" + worksModal[i].id;
+    figure.classList.add("figure");
+    divGallery.appendChild(figure);
+
+    // Création des balises
+    const image = document.createElement("img");
+    image.src = worksModal[i].imageUrl;
+    figure.appendChild(image);
+
+    const figcaption = document.createElement("figcaption");
+    figcaption.innerText = "éditer";
+    figure.appendChild(figcaption);
+  }
+  return worksModal;
+}
+
+fetchWorksModal();

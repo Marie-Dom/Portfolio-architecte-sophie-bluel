@@ -434,8 +434,8 @@ input[type="submit"]:hover {
   text-decoration: underline;
 }
 
-#login_button {
-  width: 50%;
+.login_button {
+  width: 60%;
 }
 
 #error {

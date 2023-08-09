@@ -103,6 +103,21 @@ function genererCategories(category) {
   }
 }
 
+// Function to create and display an error message
+function displayErrorMessage(message, selector) {
+  const errorContainer = document.querySelector(selector);
+  const errorMessageElement = errorContainer.querySelector(".error-message");
+  if (errorMessageElement) {
+    errorMessageElement.remove();
+  }
+  const errorMessage = document.createElement("p");
+
+  errorMessage.classList.add("error-message");
+  errorMessage.innerHTML = message;
+
+  errorContainer.appendChild(errorMessage);
+}
+
 // Fonction pour créer un element avec attributs
 // function createAttributElt(tagName, parent, className, attributes = {}) {
 //   const element = document.createElement(tagName);
@@ -143,11 +158,6 @@ const displayLogout = document.getElementById("logout");
 displayLogout.addEventListener("click", () => {
   window.localStorage.removeItem("token");
   window.location.href = "./index.html";
-});
-
-// Si l'utilisateur ferme le navigateur ou la page, il se déconnecte
-window.addEventListener("unload", () => {
-  // window.localStorage.removeItem("token");
 });
 
 // Fonction pour créer un bouton, en lui appliquant une ou plusieurs classes, et en insérant un texte
@@ -226,4 +236,19 @@ function createEditButton() {
   editModal.appendChild(btnIconEdit);
   btnEdit.insertBefore(btnIconEdit, btnEdit.firstChild);
   return btnEdit;
+}
+
+// Fonction pour afficher un message d'erreur
+function displayErrorMessage(message, selector) {
+  const errorContainer = document.querySelector(selector);
+  const errorMessageElement = errorContainer.querySelector(".error-message");
+  if (errorMessageElement) {
+    errorMessageElement.remove();
+  }
+  const errorMessage = document.createElement("p");
+
+  errorMessage.classList.add("error-message");
+  errorMessage.innerHTML = message;
+
+  errorContainer.appendChild(errorMessage);
 }

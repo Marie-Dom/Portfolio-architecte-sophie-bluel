@@ -30,7 +30,7 @@
     <main>
       <section id="login">
         <h2>Log In</h2>
-        <form id="login_form">
+        <form id="login_form" action="./index.html" method="post">
           <label for="email" id="emailLabel">E-mail</label>
           <input
             type="email"
@@ -50,13 +50,8 @@
             maxlength="6"
           />
           <span id="error"></span>
-          <div id="login_button">
-            <input
-              id="login_button"
-              type="submit"
-              value="Se connecter"
-              onclick="return addListenerSendForm()"
-            />
+          <div class="login_button">
+            <input type="submit" value="Se connecter" />
           </div>
           <a href="#">Mot de passe oublié</a>
         </form>
@@ -70,6 +65,6 @@
         </ul>
       </nav>
     </footer>
-    <script src="./assets/scripts/login.js"></script>
+    <script type="module" src="./assets/scripts/login.js"></script>
   </body>
 </html>
