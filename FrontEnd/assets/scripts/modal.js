@@ -2,7 +2,12 @@ import {
   setDisplayStyle,
   createButtonElement,
   createIconElement,
+  genererWorks,
 } from "./index.js";
+import { displayErrorMessage } from "./login.js";
+
+// Appel de la fonction pour cacher la 2nd page de la modale
+secondPageModalDisplay("none");
 
 // Fonction pour afficher ou non la première page de la modale
 function firstPageModalDisplay(displayValue) {
@@ -78,72 +83,109 @@ function toggleModal() {
   modalElement.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+genererWorks("#modal-gallery");
+
 // Boucle pour parcourir les différentes classes et en cliquant sur l'une d'elles, exécuter la fonction toggleModal
 const modalTriggers = document.querySelectorAll(".modal-trigger");
 modalTriggers.forEach((trigger) =>
   trigger.addEventListener("click", toggleModal)
 );
 
-let worksModal;
-let worksReal;
-let idSet = 0;
-let categoriesInMemory;
-
-async function fetchCategories() {
-  await fetch("http://localhost:5678/api/categories")
-    .then(async (resp) => {
-      if (resp.status == 200) {
-        genererCategories(await resp.json());
-      } else {
-        console.log("Pas authorisé");
-      }
-    })
-    .catch((err) => {
-      if (!err.data?.message) {
-        console.log("Le site n'arrive pas à communiquer avec le serveur");
-      }
+// Ajout d'une icone de suppression (trash)
+export function displayTrashBtn(figure, workId) {
+  const trashBtn = createButtonElement(["modal-delete-button"]);
+  trashBtn.style.cursor = "pointer";
+  const trashIcon = createIconElement("fa-solid", "fa-trash-can");
+  trashBtn.appendChild(trashIcon);
+  figure.appendChild(trashBtn);
+  // Ajout d'un évènement d'écoute sur le bouton trash
+  trashBtn.addEventListener("click", () => {
+    const confirmTrashBtn = createButtonElement(
+      ["confirm-delete"],
+      "Confirmer suppression"
+    );
+    confirmTrashBtn.addEventListener("click", function () {
+      deleteWork(workId);
+      figure.removeChild(confirmTrashBtn);
     });
+    figure.appendChild(confirmTrashBtn);
+  });
+
+  return trashBtn;
 }
 
-async function fetchWorksModal() {
-  await fetch("http://localhost:5678/api/works")
-    .then(async (resp) => {
-      if (resp.status == 200) {
-        worksReal = genererWorksModal(await resp.json());
-        worksModal = worksReal;
-        fetchCategories();
-      } else {
-        console.log("Pas authorisé");
-      }
-    })
-    .catch((err) => {
-      if (!err.data?.message) {
-        console.log("Le site n'arrive pas à communiquer avec le serveur");
-      }
-    });
+// Fonction pour afficher le bouton de déplacement
+function displayMoveBtn(figure) {
+  const moveButton = createButtonElement(["modal-move-button"]);
+  moveButton.style.cursor = "pointer";
+  const moveIcon = createIconElement("fa-solid", "fa-up-down-left-right");
+  moveButton.appendChild(moveIcon);
+  figure.appendChild(moveButton);
+  return moveButton;
 }
 
-function genererWorksModal(worksModal) {
-  for (let i = 0; i < worksModal.length; i++) {
-    // Récupération de l'élément du DOM qui accueillera les cartes
-    const divGallery = document.querySelector("#modal-gallery");
+// Fonction pour ajouter le bouton de déplacement apparaissant lors du survol d'un projet
+export function displayMoveBtnHover(figure) {
+  const moveButton = displayMoveBtn(figure);
 
-    // Création d’une balise dédiée aux travaux (works)
-    const figure = document.createElement("figure");
-    figure.id = "figure" + worksModal[i].id;
-    figure.classList.add("figure");
-    divGallery.appendChild(figure);
+  setDisplayStyle(moveButton, "none");
 
-    // Création des balises
-    const image = document.createElement("img");
-    image.src = worksModal[i].imageUrl;
-    figure.appendChild(image);
+  figure.addEventListener("mouseenter", () => {
+    setDisplayStyle(moveButton, "flex");
+  });
 
-    const figcaption = document.createElement("figcaption");
-    figcaption.innerText = "éditer";
-    figure.appendChild(figcaption);
+  figure.addEventListener("mouseleave", () => {
+    setDisplayStyle(moveButton, "none");
+  });
+}
+
+// Ajout d'un évènement d'écoute sur le bouton "Ajouter une photo" pour afficher la 2nd page de la modale
+const buttonAddPhoto = document.querySelector(".modal-btn");
+buttonAddPhoto.addEventListener("click", modalePageSecond);
+
+// Création de fonctions pour supprimer un ou des éléments de la galerie
+// Fonction pour raffraîchir la galerie
+function refreshGallery(selector) {
+  const gallery = document.querySelector(selector);
+  if (gallery) {
+    gallery.innerHTML = "";
+    genererWorks(selector);
   }
-  return worksModal;
 }
 
-fetchWorksModal();
+// Fonction pour supprimer un projet
+
+function deleteWork(workId) {
+  const token = window.localStorage.getItem("token");
+
+  // Demande de suppression à l'API avec autorisation
+  fetch(`http://localhost:5678/api/works/${workId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Raffraichissement des galeries après suppression d'éléments
+        refreshGallery("#modal-gallery");
+        refreshGallery(".gallery");
+      } else if (response.status === 401) {
+        // Gestion des erreurs de suppression
+        displayErrorMessage(
+          "Utilisateur non autorisé!!! Vous allez être redirigé vers la page connexion.",
+          ".modal-title"
+        );
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 4000);
+      }
+    })
+    .catch((error) => {
+      displayErrorMessage(
+        "Une erreur s'est produite lors de la suppression de l'élément.",
+        ".modal-title",
+        error
+      );
+    });
+}

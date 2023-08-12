@@ -321,7 +321,7 @@ li:hover {
   cursor: pointer;
 }
 
-.filterButton:active {
+.filterButton_active {
   color: #ffffff;
   background: #1d6154;
 }

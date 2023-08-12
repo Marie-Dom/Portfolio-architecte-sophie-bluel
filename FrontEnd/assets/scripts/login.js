@@ -43,7 +43,7 @@ loginForm.addEventListener("submit", async function (event) {
 });
 
 // Fonction pour afficher un message d'erreur
-function displayErrorMessage(message, selector) {
+export function displayErrorMessage(message, selector) {
   const errorContainer = document.querySelector(selector);
   const errorMessageElement = errorContainer.querySelector(".error-message");
   if (errorMessageElement) {
