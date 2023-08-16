@@ -1,3 +1,5 @@
+import { displayErrorMessage } from "./functions.js";
+
 const header = document.querySelector("header");
 header.classList.add("header-logout");
 let loginForm = document.querySelector("form");
@@ -41,18 +43,3 @@ loginForm.addEventListener("submit", async function (event) {
     );
   }
 });
-
-// Fonction pour afficher un message d'erreur
-export function displayErrorMessage(message, selector) {
-  const errorContainer = document.querySelector(selector);
-  const errorMessageElement = errorContainer.querySelector(".error-message");
-  if (errorMessageElement) {
-    errorMessageElement.remove();
-  }
-  const errorMessage = document.createElement("p");
-
-  errorMessage.classList.add("error-message");
-  errorMessage.innerHTML = message;
-
-  errorContainer.appendChild(errorMessage);
-}

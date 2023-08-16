@@ -599,7 +599,7 @@ input[type="submit"]:hover {
 .modal-form-field label {
   margin: 2em 0 1em 0;
 }
-.modal-btn {
+.modal-button {
   width: 180px;
   font-weight: 700;
   font-family: "Syne";
@@ -642,7 +642,7 @@ input[type="submit"]:hover {
   padding-bottom: 46px;
 }
 
-.modal-add-photo .modal-btn {
+.modal-add-photo .modal-button {
   width: 173px !important ;
   color: #306685;
   background: #cbd6dc;
@@ -659,19 +659,19 @@ input[type="submit"]:hover {
   font-size: 16px !important;
   text-decoration: none !important;
 }
-.modal-btn,
-#modal-btn-submit {
+.modal-button,
+#modal-button-submit {
   padding: 10px 0px !important;
   width: 237px !important;
   cursor: pointer !important;
   border: none !important;
 }
 
-.modal-btn {
+.modal-button {
   margin: 38px 0px 23px 0px !important;
 }
 
-#modal-btn-submit {
+#modal-button-submit {
   background: #a7a7a7;
   margin: 38px 0px 7px 0px !important;
 }
