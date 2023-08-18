@@ -1,6 +1,5 @@
 import {
   fetchWorks,
-  genererWorks,
   createCloseButton,
   secondPageModalDisplay,
   toggleModal,
@@ -10,10 +9,9 @@ import {
   createChildElement,
   createChildInputElement,
   formatFileName,
-  fetchCategories,
-  checkFormFields,
   displayErrorMessage,
 } from "./functions.js";
+import { genererWorks } from "./index.js";
 
 // Appel de la fonction pour cacher la 2nd page de la modale
 secondPageModalDisplay("none");
@@ -98,6 +96,36 @@ fetchWorks().then((dataWork) => {
   fetchCategories(dataWork);
 });
 
+function fetchCategories(dataWork) {
+  const categorySelect = document.getElementById("categorie");
+  categorySelect.innerHTML = "";
+
+  // Création d'une option pour choisir une catégorie
+  const chooseOption = createChildElement("option", categorySelect, null, {
+    value: "",
+    disabled: true,
+    selected: true,
+  });
+  chooseOption.textContent = "Choisissez une catégorie";
+
+  // Création des options de catégorie :
+  // la liste des identifiants de catégories uniques est extraite des données dataWork
+  const categoryList = Array.from(
+    new Set(dataWork.map((jsonWork) => jsonWork.categoryId))
+  );
+
+  categoryList.forEach((categoryId) => {
+    // Récupération du nom de la catégorie correspondante à partir des données dataWork
+    const categoryName = dataWork.find((work) => work.categoryId === categoryId)
+      .category.name;
+    // Création et ajout d'une nouvelle option à l'élément de la sélection
+    const option = createChildElement("option", categorySelect, null, {
+      value: categoryId,
+    });
+    option.textContent = categoryName;
+  });
+}
+
 // Au clic sur le bouton "ajouter une photo" ou sur le conteneur d'images, cela déclenche la sélection du fichier
 addButton.addEventListener("click", function () {
   photoInput.click();
@@ -140,6 +168,24 @@ photoInput.addEventListener("change", function (event) {
     titleInput.value = "";
   }
 });
+
+// Fonction pour vérifier si tous les champs sont remplis et changer la couleur du bouton d'envoi en conséquence
+function checkFormFields() {
+  const titleValue = titleInput.value;
+  const categoryValue = categorySelect.value;
+  const imageFile = photoInput.files[0];
+
+  // Vérification que tous les champs sont remplis. La méthode trim() permet de nettoyer les champs
+  // et de supprimer automatiquement les espaces et autres tabulations autour de la chaîne à tester.
+  const allFieldsFilled =
+    titleValue.trim() !== "" &&
+    categoryValue.trim() !== "" &&
+    imageFile !== undefined;
+
+  const submitButton = document.getElementById("modal-button-submit");
+  // Mise à jour de la couleur du bouton de validation
+  submitButton.style.backgroundColor = allFieldsFilled ? "#1D6154" : "#A7A7A7";
+}
 
 // Ajout d'un évènement d'écoute sur chaque champ du formulaire
 titleInput.addEventListener("input", checkFormFields);

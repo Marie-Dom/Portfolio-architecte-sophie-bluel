@@ -615,6 +615,7 @@ input[type="submit"]:hover {
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 .modal-close,
 .modal-prev {
@@ -651,6 +652,7 @@ input[type="submit"]:hover {
 
 .modal-add-photo p {
   font-size: 10px;
+  cursor: pointer;
 }
 
 .error-message {

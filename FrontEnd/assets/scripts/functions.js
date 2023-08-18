@@ -25,47 +25,6 @@ export function displayFilters(dataWork) {
   });
 }
 
-// Fonction pour générer les projets
-export async function genererWorks(targetElement) {
-  return fetchWorks().then((dataWork) => {
-    // Sélectionne l'élément cible de la galerie dans le sélecteur spécifié
-    const galleryElement = document.querySelector(targetElement);
-    dataWork.forEach((jsonWork) => {
-      // Crée l'élément figure pour représenter le projet
-      const figure = document.createElement("figure");
-      figure.classList.add("work");
-      figure.dataset.category = jsonWork.categoryId;
-
-      // Crée l'élément img pour afficher l'image du projet
-      const img = document.createElement("img");
-      img.src = jsonWork.imageUrl;
-      img.alt = "image du projet";
-
-      figure.appendChild(img);
-      // Si l'élément ciblé est la galerie, créer l'élément figcaption avec son titre associé
-      if (targetElement === ".gallery") {
-        const figcaption = document.createElement("figcaption");
-        figcaption.textContent = jsonWork.title;
-        figure.appendChild(figcaption);
-      }
-      // Pour la galerie du modal même chose mais remplace le titre par le mot 'éditer'
-      if (targetElement === "#modal-gallery") {
-        const figcaption = document.createElement("figcaption");
-        figcaption.textContent = "éditer";
-        figure.appendChild(figcaption);
-
-        // Sauvegarde de l'identifiant d'un projet
-        const workId = jsonWork.id;
-        // Fonctions d'appel pour afficher le bouton de suppression et gérer le survol de la souris
-        displayTrashButton(figure, workId);
-        displayMoveButtonHover(figure);
-      }
-
-      galleryElement.appendChild(figure);
-    });
-  });
-}
-
 // Fonction pour supprimer la classe "filter_active" de tous les filtres
 export function deleteActiveClass() {
   const buttonFilters = document.querySelectorAll(".filterButton");
@@ -134,41 +93,6 @@ export function createIconElement(...classNames) {
     icon.classList.add(className);
   });
   return icon;
-}
-
-// Fonction pour créer le bouton "modifier" et l'icone
-
-export function createEditElement() {
-  const iconEdit = createIconElement("fa-regular", "fa-pen-to-square");
-  const displayEdit = createButtonElement(["positionEdit"], "modifier");
-  displayEdit.insertBefore(iconEdit, displayEdit.firstChild);
-  return displayEdit;
-}
-
-// Fonction pour la mise en place du bandeau noir en mode édition
-export function displayHeadbandEditMod() {
-  const header = document.querySelector("header");
-  header.style.marginTop = "100px";
-
-  const headerH1 = document.querySelector("header h1");
-  const divBlackHeadband = document.createElement("div");
-  divBlackHeadband.id = "blackHeadband";
-  header.insertBefore(divBlackHeadband, headerH1);
-
-  const divEditMod = createButtonElement(["positionEdit"], "Mode édition");
-  divEditMod.style.paddingTop = "0";
-  divEditMod.insertBefore(
-    createEditElement().firstChild,
-    divEditMod.firstChild
-  );
-
-  const publishChangesButton = createButtonElement(
-    ["publish-changes-button"],
-    "publier les changements"
-  );
-
-  divBlackHeadband.appendChild(divEditMod);
-  divBlackHeadband.appendChild(publishChangesButton);
 }
 
 // Fonction pour créer le bouton en mode edit sous l'image
@@ -378,54 +302,6 @@ export function formatFileName(fileName) {
   const finalFileName = trimmedFileName.replace(/-/g, " ");
 
   return finalFileName;
-}
-
-export function fetchCategories(dataWork) {
-  const categorySelect = document.getElementById("categorie");
-  categorySelect.innerHTML = "";
-
-  // Création d'une option pour choisir une catégorie
-  const chooseOption = createChildElement("option", categorySelect, null, {
-    value: "",
-    disabled: true,
-    selected: true,
-  });
-  chooseOption.textContent = "Choisissez une catégorie";
-
-  // Création des options de catégorie :
-  // la liste des identifiants de catégories uniques est extraite des données dataWork
-  const categoryList = Array.from(
-    new Set(dataWork.map((jsonWork) => jsonWork.categoryId))
-  );
-
-  categoryList.forEach((categoryId) => {
-    // Récupération du nom de la catégorie correspondante à partir des données dataWork
-    const categoryName = dataWork.find((work) => work.categoryId === categoryId)
-      .category.name;
-    // Création et ajout d'une nouvelle option à l'élément de la sélection
-    const option = createChildElement("option", categorySelect, null, {
-      value: categoryId,
-    });
-    option.textContent = categoryName;
-  });
-}
-
-// Fonction pour vérifier si tous les champs sont remplis et changer la couleur du bouton d'envoi en conséquence
-export function checkFormFields() {
-  const titleValue = titleInput.value;
-  const categoryValue = categorySelect.value;
-  const imageFile = photoInput.files[0];
-
-  // Vérification que tous les champs sont remplis. La méthode trim() permet de nettoyer les champs
-  // et de supprimer automatiquement les espaces et autres tabulations autour de la chaîne à tester.
-  const allFieldsFilled =
-    titleValue.trim() !== "" &&
-    categoryValue.trim() !== "" &&
-    imageFile !== undefined;
-
-  const submitButton = document.getElementById("modal-button-submit");
-  // Mise à jour de la couleur du bouton de validation
-  submitButton.style.backgroundColor = allFieldsFilled ? "#1D6154" : "#A7A7A7";
 }
 
 // Fonction pour afficher un message d'erreur
