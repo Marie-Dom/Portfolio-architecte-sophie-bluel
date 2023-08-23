@@ -188,10 +188,6 @@ export function displayTrashButton(figure, workId) {
   figure.appendChild(trashButton);
   // Ajout d'un évènement d'écoute sur le bouton trash
   trashButton.addEventListener("click", () => {
-    const confirmTrashButton = createButtonElement(
-      ["confirm-delete"],
-      "Confirmer suppression"
-    );
     figure.appendChild(confirmTrashButton);
     confirmTrashButton.addEventListener("click", function () {
       deleteWork(workId);
@@ -240,7 +236,6 @@ function deleteWork(workId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("suppression ok");
         // Raffraichissement des galeries après suppression d'éléments
         refreshGallery("#modal-gallery");
         refreshGallery(".gallery");

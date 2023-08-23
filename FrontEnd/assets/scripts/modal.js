@@ -221,7 +221,6 @@ form.addEventListener("submit", function (event) {
     .then((response) => {
       // Si la requête est correcte
       if (response.status === 201) {
-        console.log("ok");
         // Actualisation de l'affichage de la galerie, réinitialisation du formulaire à son état d'origine
         // et affiche la première page de la modale
         refreshGallery("#modal-gallery");
@@ -244,7 +243,7 @@ form.addEventListener("submit", function (event) {
       }
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       displayErrorMessage("Une erreur est survenue.", "#modal-form", error);
     });
 });
