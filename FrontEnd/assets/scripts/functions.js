@@ -188,13 +188,9 @@ export function displayTrashButton(figure, workId) {
   figure.appendChild(trashButton);
   // Ajout d'un évènement d'écoute sur le bouton trash
   trashButton.addEventListener("click", () => {
-    figure.appendChild(confirmTrashButton);
-    confirmTrashButton.addEventListener("click", function () {
-      deleteWork(workId);
-      figure.removeChild(confirmTrashButton);
-    });
+    deleteWork(workId);
+    figure.removeChild(confirmTrashButton);
   });
-
   return trashButton;
 }
 

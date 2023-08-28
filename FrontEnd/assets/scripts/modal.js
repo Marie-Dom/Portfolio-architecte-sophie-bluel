@@ -217,33 +217,32 @@ form.addEventListener("submit", function (event) {
       Accept: "multipart/form-data",
     },
     body: formData,
-  })
-    .then((response) => {
-      // Si la requête est correcte
-      if (response.status === 201) {
-        // Actualisation de l'affichage de la galerie, réinitialisation du formulaire à son état d'origine
-        // et affiche la première page de la modale
-        refreshGallery("#modal-gallery");
-        refreshGallery(".gallery");
-        form.reset();
-        containerImg.style.display = "none";
-        containerImg.src = "";
-        addButton.style.visibility = "visible";
-        const submitButton = document.getElementById("modal-button-submit");
-        submitButton.style.backgroundColor = "#A7A7A7";
-        window.scrollTo(600, 600);
-        modalePagefirst();
-      } else if (response.status === 400) {
-        displayErrorMessage(
-          "Veuillez remplir tous les champs du formulaire.",
-          "#modal-form"
-        );
-      } else if (response.status === 401) {
-        displayErrorMessage("Utilisateur non autorisé!!!", "#modal-form");
-      }
-    })
-    .catch((error) => {
-      // console.log(error);
-      displayErrorMessage("Une erreur est survenue.", "#modal-form", error);
-    });
+  }).then((response) => {
+    // Si la requête est correcte
+    if (response.status === 201) {
+      // Actualisation de l'affichage de la galerie, réinitialisation du formulaire à son état d'origine
+      // et affiche la première page de la modale
+      refreshGallery("#modal-gallery");
+      refreshGallery(".gallery");
+      form.reset();
+      containerImg.style.display = "none";
+      containerImg.src = "";
+      addButton.style.visibility = "visible";
+      const submitButton = document.getElementById("modal-button-submit");
+      submitButton.style.backgroundColor = "#A7A7A7";
+      window.scrollTo(600, 600);
+      modalePagefirst();
+    } else if (response.status === 400) {
+      displayErrorMessage(
+        "Veuillez remplir tous les champs du formulaire.",
+        "#modal-form"
+      );
+    } else if (response.status === 401) {
+      displayErrorMessage("Utilisateur non autorisé!!!", "#modal-form");
+    }
+  });
+  // .catch((error) => {
+  //   // console.log(error);
+  //   displayErrorMessage("Une erreur est survenue.", "#modal-form", error);
+  // });
 });
